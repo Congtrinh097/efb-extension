@@ -15,13 +15,33 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  height: 91vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.carousel-root {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100% !important;
+}
+
+.legend {
+  height: 500px;
+  background: #000000bd !important;
+  font-size: 26px !important;
+  opacity: 0.75 !important;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  bottom: 550px !important;
 }
 
 .App-link {
