@@ -22,15 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { getComparator, stableSort } from '../../utils';
-import { Order } from '../../models';
-
-interface Data {
-  word: string;
-  meaning: string;
-  addedDate: string;
-  addedTimes: number;
-  star: boolean;
-}
+import { Order, Word } from '../../models';
 
 function createData(
   word: string,
@@ -38,7 +30,7 @@ function createData(
   addedDate: string, 
   addedTimes: number,
   star: boolean
-): Data {
+): Word {
   return {
     word,
     meaning,
@@ -48,7 +40,7 @@ function createData(
   };
 }
 
-const rows: Data[] = [
+const rows: Word[] = [
   createData('Dad', 'Cha', '20/01/2023 07:00',1 ,true),
   createData('Coconut', 'Trái dừa', '20/01/2023 07:00',1 ,true),
   createData('Flower', 'Hoa', '20/01/2023 07:00',1 ,true),
@@ -60,7 +52,7 @@ const rows: Data[] = [
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof Data;
+  id: keyof Word;
   label: string;
   numeric: boolean;
 }
@@ -94,7 +86,7 @@ const headCells: readonly HeadCell[] = [
 
 interface EnhancedTableProps {
   numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Word) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
@@ -105,7 +97,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
     props;
   const createSortHandler =
-    (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+    (property: keyof Word) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
 
@@ -205,7 +197,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 
 export default function EnhancedTable() {
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('addedDate');
+  const [orderBy, setOrderBy] = React.useState<keyof Word>('addedDate');
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -213,7 +205,7 @@ export default function EnhancedTable() {
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data,
+    property: keyof Word,
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
