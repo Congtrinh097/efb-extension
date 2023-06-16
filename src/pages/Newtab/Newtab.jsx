@@ -14,7 +14,7 @@ const Newtab = () => {
   return (
     <div className="App">
       <div>
-        <span >Show Mode</span>
+        <span >Flip Mode</span>
         <span><Switch value={toggleButton} label={"Show Flip"} defaultChecked color="warning" onChange={toggle}/></span>
       </div>
       <body className="App-header">
