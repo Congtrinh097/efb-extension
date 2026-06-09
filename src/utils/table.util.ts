@@ -30,8 +30,8 @@ function getComparator<Key extends keyof any>(
   order: Order,
   orderBy: Key,
 ): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
+  a: Partial<Record<Key, unknown>>,
+  b: Partial<Record<Key, unknown>>,
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)

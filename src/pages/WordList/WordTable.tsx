@@ -25,15 +25,19 @@ import { getComparator, stableSort } from '../../utils';
 import { Order, Word } from '../../models';
 
 function createData(
-  word: string,
-  meaning: string, 
-  addedDate: string, 
+  id: number,
+  text: string,
+  meaning: string,
+  description: string,
+  addedDate: string,
   addedTimes: number,
   star: boolean
 ): Word {
   return {
-    word,
+    id,
+    text,
     meaning,
+    description,
     addedDate,
     addedTimes,
     star,
@@ -41,12 +45,12 @@ function createData(
 }
 
 const rows: Word[] = [
-  createData('Dad', 'Cha', '20/01/2023 07:00',1 ,true),
-  createData('Coconut', 'Trái dừa', '20/01/2023 07:00',1 ,true),
-  createData('Flower', 'Hoa', '20/01/2023 07:00',1 ,true),
-  createData('Frozen', 'Đóng băng', '20/01/2023 07:00',1 ,true),
-  createData('Consolidate', 'Củng cố', '20/01/2023 07:00',1 ,true),
-  createData('Can you say this?', 'Bạn có thể nói cái này không?', '20/01/2023 07:00',1 ,true),
+  createData(1, 'Dad', 'Cha', '', '20/01/2023 07:00', 1, true),
+  createData(2, 'Coconut', 'Trái dừa', '', '20/01/2023 07:00', 1, true),
+  createData(3, 'Flower', 'Hoa', '', '20/01/2023 07:00', 1, true),
+  createData(4, 'Frozen', 'Đóng băng', '', '20/01/2023 07:00', 1, true),
+  createData(5, 'Consolidate', 'Củng cố', '', '20/01/2023 07:00', 1, true),
+  createData(6, 'Can you say this?', 'Bạn có thể nói cái này không?', '', '20/01/2023 07:00', 1, true),
 ];
 
 
@@ -59,7 +63,7 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: 'word',
+    id: 'text',
     numeric: false,
     disablePadding: true,
     label: 'Word',
@@ -214,7 +218,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.word);
+      const newSelected = rows.map((n) => n.text);
       setSelected(newSelected);
       return;
     }
@@ -282,17 +286,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.word as string);
+                  const isItemSelected = isSelected(row.text as string);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.word as string)}
+                      onClick={(event) => handleClick(event, row.text as string)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.word}
+                      key={row.text}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -310,7 +314,7 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.word}
+                        {row.text}
                       </TableCell>
                       <TableCell align="right">{row.meaning}</TableCell>
                       <TableCell align="right">{row.addedDate}</TableCell>
